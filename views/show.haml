@@ -3,6 +3,8 @@
 
 %h3= "Log contents <small> #{@date.to_s} </small>"
 
+%a{:href => "/clear"} Clear logs
+
 %ul
   - @logs.each do |log|
     %li= log.gsub(/_/, " ")
