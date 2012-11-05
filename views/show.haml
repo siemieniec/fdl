@@ -1,11 +1,13 @@
-%link(rel="stylesheet" type="text/css" href="styl.css")
-%script(type="text/javascript" src="jquery-1.6.1.min.js") 
+!!! 5
+%html
+  %head
+    %link{:rel => "stylesheet", :href => "styl.css"}
+    %script{:src => "jquery-1.6.1.min.js"}
 
-%h3= "Log contents <small> #{@date.to_s} </small>"
+  %body
+    %a{:href => "/clear"} Clear logs
+    %hr
 
-%a{:href => "/clear"} Clear logs
-
-%ul
-  - @logs.each do |log|
-    %li= log.gsub(/_/, " ")
-
+    %ul
+      - @logs.each do |log|
+        %li= log.gsub(/_/, " ")
