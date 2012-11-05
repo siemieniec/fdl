@@ -1,4 +1,3 @@
-require File.expand_path('../fdl/version', __FILE__)
 require "sinatra"
 require "sinatra/base"
 require "haml"
@@ -9,8 +8,7 @@ module Fdl
     set :root, File.expand_path("../..", __FILE__)
 
     get "/" do
-      [200, { "context-type" => "text/html"},
-        File.read("public/index.html")]
+      redirect "/show"
     end
 
     get "/log" do
