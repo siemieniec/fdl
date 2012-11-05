@@ -7,7 +7,10 @@ module Fdl
   class WebApp < Sinatra::Base
     set :root, File.expand_path("../..", __FILE__)
 
+    WHITELIST = %w(127.0.0.1)
+
     get "/" do
+      halt 403 unless WHITELIST.include? request.ip
       redirect "/show"
     end
 
@@ -21,21 +24,29 @@ module Fdl
     end
 
     get "/show" do
+      halt 403 unless WHITELIST.include? request.ip
+
       @date = Date.today
       if File.exists?(WebApp.log_file_path)
         @logs = File.readlines(WebApp.log_file_path).reverse
       else
         @logs = ["Nothing logged yet"]
       end
+
       haml :show
     end
 
     get "/clear" do
+      halt 403 unless WHITELIST.include? request.ip
+
       if File.exists?(WebApp.log_file_path)
         File.delete(WebApp.log_file_path)
       end
+
       redirect "/show"
     end
+
+    private
 
     def self.push message
       File.open(log_file_path, "a+") do |f|
